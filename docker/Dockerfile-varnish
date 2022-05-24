@@ -35,6 +35,7 @@ RUN set -xe \
         && curl -A "Docker" -o /tmp/varnish-modules.tar.gz -D - -L -s https://github.com/varnish/varnish-modules/archive/refs/tags/${VARNISH_MODULES_VERSION}.tar.gz \
         && tar zxpf /tmp/varnish-modules.tar.gz -C /tmp/ \
         && cd /tmp/varnish-modules-${VARNISH_MODULES_VERSION} \
+        && ./bootstrap \
         && ./configure \
         && make \
         # && make check \
