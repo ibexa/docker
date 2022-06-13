@@ -29,7 +29,7 @@ services:
     networks:
      - frontend
      - backend
-    command: ["--acl-add", "app", "--debug-acl-add", "app"]
+#    command: ["--acl-add", "app", "--debug-acl-add", "app"]
     stdin_open: true
     tty: true
 
