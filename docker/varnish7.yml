@@ -30,6 +30,8 @@ services:
      - frontend
      - backend
     command: ["--acl-add", "app", "--debug-acl-add", "app"]
+    stdin_open: true
+    tty: true
 
 ## DEBUG??
 # In need of debugging all request going to Varnish, use varnishlog, example:
