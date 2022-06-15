@@ -1,4 +1,4 @@
-FROM emgag/varnish:6.2.3
+FROM emgag/varnish:6.1.1-1
 
 COPY vendor/ezsystems/ezplatform-http-cache/docs/varnish/vcl/varnish7.vcl /etc/varnish/default.vcl
 COPY vendor/ezsystems/ezplatform-http-cache/docs/varnish/vcl/parameters.vcl /etc/varnish/parameters.vcl
