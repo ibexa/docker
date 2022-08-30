@@ -1,4 +1,6 @@
-FROM ghcr.io/emgag/varnish:7.0.2
+FROM ghcr.io/emgag/varnish:7.1.0
 
 COPY vendor/ezsystems/ezplatform-http-cache/docs/varnish/vcl/varnish7.vcl /etc/varnish/default.vcl
-COPY vendor/ezsystems/ezplatform-http-cache/docs/varnish/vcl/parameters.vcl /etc/varnish/parameters.vcl
+COPY doc/docker/entrypoint/varnish/parameters.vcl /etc/varnish/parameters.vcl
+
+EXPOSE 80 6082
