@@ -19,8 +19,8 @@ RUN set -xe \
             libpcre3-dev \
             libtool \
             pkg-config \
-            python-docutils \
-            python-sphinx \
+            sphinx-doc\
+            sphinx-common\
             varnish-dev \
         " \
     # Update apt and get dependencies
