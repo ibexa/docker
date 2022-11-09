@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM debian:stretch-slim
 
 ENV VARNISH_MALLOC_SIZE="256M" \
     DEBIAN_FRONTEND=noninteractive
@@ -19,8 +19,8 @@ RUN set -xe \
             libpcre3-dev \
             libtool \
             pkg-config \
-            sphinx-doc\
-            sphinx-common\
+            python-docutils \
+            python-sphinx \
             varnish-dev \
         " \
     # Update apt and get dependencies
