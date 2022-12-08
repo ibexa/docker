@@ -7,6 +7,10 @@ services:
     volumes:
      - ${COMPOSE_DIR}/../../:/var/www:cached
      - ${COMPOSER_HOME}:/root/.composer:cached
+    ulimits:
+      nofile:
+        soft: 90000
+        hard: 90000
     depends_on:
      - db
     environment:
