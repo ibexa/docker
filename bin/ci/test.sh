@@ -2,8 +2,8 @@
 
 set -e
 # Expects images from build.sh, as in:
-# - ez_php:latest
-# - ez_php:latest-node
+# - ibexa_php:latest
+# - ibexa_php:latest-node
 REUSE_VOLUME=0
 
 ## Parse arguments
@@ -34,14 +34,14 @@ if [ "$REUSE_VOLUME" = "0" ]; then
         COMPOSER_HOME=~/.composer
     fi
 
-    printf "\nBuilding on ez_php:latest, composer will implicit check requirements\n"
+    printf "\nBuilding on ibexa_php:latest, composer will implicit check requirements\n"
     if [ "$PRODUCT_VERSION" = "^2.5" ]; then
         docker run -ti --rm \
           -e SYMFONY_ENV \
           -e PHP_INI_ENV_memory_limit=3G \
           -v $(pwd)/volumes/ezplatform:/var/www \
           -v  $COMPOSER_HOME:/root/.composer \
-          ez_php:latest-node \
+          ibexa_php:latest-node \
           bash -c "
           composer --version &&
           composer create-project --no-progress --no-interaction ezsystems/ezplatform /var/www $PRODUCT_VERSION"
@@ -51,7 +51,7 @@ if [ "$REUSE_VOLUME" = "0" ]; then
           -e PHP_INI_ENV_memory_limit=3G \
           -v $(pwd)/volumes/ezplatform:/var/www \
           -v  $COMPOSER_HOME:/root/.composer \
-          ez_php:latest-node \
+          ibexa_php:latest-node \
           bash -c "
           composer --version &&
           composer create-project --no-progress --no-interaction $COMPOSER_OPTIONS ibexa/website-skeleton /var/www $PRODUCT_VERSION &&
@@ -65,22 +65,22 @@ if [ "$REUSE_VOLUME" = "0" ]; then
 fi
 
 printf "\nMake sure Node.js and Yarn are included in latest-node\n"
-docker -l error run -a stderr ez_php:latest-node node -e "process.versions.node"
-docker -l error run -a stderr ez_php:latest-node bash -c "yarn -v"
+docker -l error run -a stderr ibexa_php:latest-node node -e "process.versions.node"
+docker -l error run -a stderr ibexa_php:latest-node bash -c "yarn -v"
 
 printf "\nVersion and module information about php build\n"
-docker run -ti --rm ez_php:latest-node bash -c "php -v; php -m"
+docker run -ti --rm ibexa_php:latest-node bash -c "php -v; php -m"
 
 printf "\nVersion and module information about php build with enabled xdebug\n"
-docker run -ti --rm -e ENABLE_XDEBUG="1" ez_php:latest-node bash -c "php -v; php -m"
+docker run -ti --rm -e ENABLE_XDEBUG="1" ibexa_php:latest-node bash -c "php -v; php -m"
 
-printf "\Integration: Behat testing on ez_php:latest and ez_php:latest-node with eZ Platform\n"
+printf "\Integration: Behat testing on ibexa_php:latest and ibexa_php:latest-node with eZ Platform\n"
 cd volumes/ezplatform
 
 export COMPOSE_FILE="doc/docker/base-dev.yml:doc/docker/redis.yml:doc/docker/selenium.yml" 
 export SYMFONY_ENV="behat" SYMFONY_DEBUG="1" 
 export APP_ENV="behat" APP_DEBUG="1" 
-export PHP_IMAGE="ez_php:latest-node" PHP_IMAGE_DEV="ez_php:latest-node"
+export PHP_IMAGE="ibexa_php:latest-node" PHP_IMAGE_DEV="ibexa_php:latest-node"
 
 if [ "$PRODUCT_VERSION" = "^2.5" ]; then
     docker-compose --env-file .env -f doc/docker/install-dependencies.yml -f doc/docker/install-database.yml up --abort-on-container-exit
