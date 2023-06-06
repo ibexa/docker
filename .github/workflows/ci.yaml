@@ -1,0 +1,62 @@
+name: Build and test Docker images
+on:
+    push:
+        branches:
+            - main
+    pull_request: ~
+    workflow_dispatch:
+        inputs:
+            force:
+                default: false
+                required: false
+                type: boolean
+                description: "Push new images even when tests fail"
+
+jobs:
+    build-and-publish:
+        runs-on: ubuntu-latest
+        permissions:
+          contents: read
+          packages: write
+        strategy:
+            fail-fast: false
+            matrix:
+                php:
+                    - "7.4"
+                    - "8.0"
+                    - "8.1"
+                node:
+                    - "14"
+                    - "16"
+                product-version:
+                    - "~4.6.x-dev"
+                include:
+                    - php: "7.3"
+                      product-version: "~3.3.x-dev"
+                      node: "12"
+                    - php: "7.3"
+                      product-version: "~3.3.x-dev"
+                      node: "14"
+                    - php: "7.3"
+                      product-version: "~3.3.x-dev"
+                      node: "16"
+
+        steps:
+            - uses: actions/checkout@v3
+            - name: Build image
+              run: bin/ci/build.sh ${{ matrix.php }} ${{ matrix.node }}
+            - name: Test image
+              run: bin/ci/test.sh
+              continue-on-error: ${{ inputs.send-success-notification != '' }}
+              env:
+                TEST_CMD: "vendor/bin/behat -v --profile=browser --suite=admin-ui --tags=@richtext --config=behat_ibexa_oss.yaml"
+                PRODUCT_VERSION: ${{ matrix.product-version }}
+            - name: Log in to the Container registry
+              uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+              with:
+                registry: ghcr.io
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+            - name: Push image
+              if: github.ref_name == 'main'
+              run: bin/ci/push.sh ghcr.io/ibexa/docker/php
