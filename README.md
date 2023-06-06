@@ -3,10 +3,7 @@
 This package contains unsupported docker building blocks used for some of automated functional testing infrastructure at [Ibexa](https://ibexa.co).
 Feel free to copy it for own use or look to it for some recommended settings.
 
-**NOTE**: If you are just looking to get easily up and running and developing with Ibexa DXP,
-see community-supported [eZ Launchpad](https://ezsystems.github.io/launchpad/) which is tailored for project development use cases.
-_If not, be
-aware of the following limitations:_
+Be aware of the following limitations:
 
 > **WARNING, made mainly for automation:** The tools within this directory are meant for use in test automation, QA,
 Support and demo use cases, and with time as a blueprint for how to best configure your own setup. You are free to use
