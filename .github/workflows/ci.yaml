@@ -1,8 +1,5 @@
 name: Build and test Docker images
 on:
-    push:
-        branches:
-            - main
     pull_request: ~
     workflow_dispatch:
         inputs:
@@ -59,5 +56,5 @@ jobs:
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
             - name: Push image
-              if: github.ref_name == 'main'
+              if: github.event_name == 'workflow_dispatch'
               run: bin/ci/push.sh ghcr.io/ibexa/docker/php
