@@ -14,6 +14,7 @@ services:
      - ENABLE_XDEBUG
      - EZPLATFORM_SITEACCESS
      - PHP_INI_ENV_memory_limit
+     - PHP_INI_ENV_error_reporting
      - APP_ENV=${APP_ENV-dev}
      - APP_DEBUG
      - APP_HTTP_CACHE
