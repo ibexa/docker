@@ -5,7 +5,7 @@ services:
   app:
     build:
       context: ../../
-      dockerfile: ${APP_DOCKER_FILE}
+      dockerfile: ${APP_DOCKER_FILE-doc/docker/Dockerfile-app}
       args:
        - PHP_IMAGE
     depends_on:
