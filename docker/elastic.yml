@@ -10,12 +10,12 @@ version: '3.3'
 services:
   app:
     depends_on:
-      - elastic
+      - elasticsearch
     environment:
       - SEARCH_ENGINE=elasticsearch
-      - ELASTICSEARCH_DSN=http://0.0.0.0:9200
+      - ELASTICSEARCH_DSN=elasticsearch:9200
 
-  elastic:
+  elasticsearch:
     build:
       context: ../../
       dockerfile: doc/docker/Dockerfile-elastic
