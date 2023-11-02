@@ -13,6 +13,9 @@ services:
      - SE_VNC_NO_PASSWORD=1
      - SE_NODE_MAX_SESSIONS=2
      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+     - SE_START_VNC=false
+     - SE_SESSION_REQUEST_TIMEOUT=120
+     - SE_SESSION_RETRY_INTERVAL=2
     networks:
      - backend
     # Because of: https://github.com/elgalu/docker-selenium/issues/20
