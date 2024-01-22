@@ -9,7 +9,6 @@ services:
     environment:
      - PERCY_TOKEN
      - PERCY_BRANCH
-     - PERCY_PAGE_LOAD_TIMEOUT=60
     networks:
      - backend
     command: /bin/sh -c 'npm install -g @percy/cli && apk add chromium && PERCY_BROWSER_EXECUTABLE="/usr/bin/chromium-browser" npx percy exec:start'
