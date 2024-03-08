@@ -16,9 +16,7 @@ services:
       - ELASTICSEARCH_DSN=elasticsearch:9200
 
   elasticsearch:
-    build:
-      context: ../../
-      dockerfile: doc/docker/Dockerfile-elastic
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.18
     ports:
       - "9200:9200"
       - "9300:9300"
