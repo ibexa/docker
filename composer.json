@@ -7,7 +7,7 @@
     "require": {},
     "extra": {
         "branch-alias": {
-            "dev-main": "4.6.x-dev"
+            "dev-main": "5.0.x-dev"
         }
     }
 }
