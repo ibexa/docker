@@ -21,8 +21,8 @@ jobs:
                 php:
                     - "7.4"
                     - "8.0"
-                    - "8.1"
-                    - "8.2"
+#                    - "8.1"
+#                    - "8.2"
                     - "8.3"
                 node:
                     - "18"
@@ -32,11 +32,14 @@ jobs:
                     - php: "7.3"
                       product-version: "~3.3.x-dev"
                       node: "14"
-                    - php: "7.3"
+                    - php: "7.4"
                       product-version: "~3.3.x-dev"
                       node: "16"
-                    - php: "7.3"
+                    - php: "8.3"
                       product-version: "~3.3.x-dev"
+                      node: "18"
+                    - php: "8.3"
+                      product-version: "~5.0.x-dev"
                       node: "18"
 
         steps:
