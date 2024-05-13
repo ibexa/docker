@@ -39,7 +39,7 @@ jobs:
                       node: "18"
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
             - name: Build image
               run: bin/ci/build.sh ${{ matrix.php }} ${{ matrix.node }}
             - name: Test image
@@ -49,7 +49,7 @@ jobs:
                 TEST_CMD: "vendor/bin/behat -v --profile=browser --suite=admin-ui --tags=@richtext --config=behat_ibexa_oss.yaml"
                 PRODUCT_VERSION: ${{ matrix.product-version }}
             - name: Log in to the Container registry
-              uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+              uses: docker/login-action@v3
               with:
                 registry: ghcr.io
                 username: ${{ github.actor }}
