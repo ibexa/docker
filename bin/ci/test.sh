@@ -71,17 +71,17 @@ export COMPOSE_FILE="doc/docker/base-dev.yml:doc/docker/redis.yml:doc/docker/sel
 export APP_ENV="behat" APP_DEBUG="1"
 export PHP_IMAGE="ibexa_php:latest-node" PHP_IMAGE_DEV="ibexa_php:latest-node"
 
-docker-compose --env-file .env up -d --build --force-recreate
+docker compose --env-file .env up -d --build --force-recreate
 echo '> Workaround for test issues: Change ownership of files inside docker container'
-docker-compose --env-file=.env exec -T app sh -c 'chown -R www-data:www-data /var/www'
+docker compose --env-file=.env exec -T app sh -c 'chown -R www-data:www-data /var/www'
 # Rebuild Symfony container
-docker-compose --env-file=.env exec -T --user www-data app sh -c "rm -rf var/cache/*"
-docker-compose --env-file=.env exec -T --user www-data app php bin/console cache:clear
+docker compose --env-file=.env exec -T --user www-data app sh -c "rm -rf var/cache/*"
+docker compose --env-file=.env exec -T --user www-data app php bin/console cache:clear
 # Install database & generate schema
-docker-compose --env-file=.env exec -T --user www-data app sh -c "php /scripts/wait_for_db.php; php bin/console ibexa:install"
-docker-compose --env-file=.env exec -T --user www-data app sh -c "php bin/console ibexa:graphql:generate-schema"
-docker-compose --env-file=.env exec -T --user www-data app sh -c "composer run post-install-cmd"
+docker compose --env-file=.env exec -T --user www-data app sh -c "php /scripts/wait_for_db.php; php bin/console ibexa:install"
+docker compose --env-file=.env exec -T --user www-data app sh -c "php bin/console ibexa:graphql:generate-schema"
+docker compose --env-file=.env exec -T --user www-data app sh -c "composer run post-install-cmd"
 
-docker-compose --env-file=.env exec -T --user www-data app sh -c "php /scripts/wait_for_db.php; php bin/console cache:warmup; $TEST_CMD"
+docker compose --env-file=.env exec -T --user www-data app sh -c "php /scripts/wait_for_db.php; php bin/console cache:warmup; $TEST_CMD"
 
-docker-compose --env-file .env down -v
+docker compose --env-file .env down -v
