@@ -80,8 +80,21 @@ RUN set -xe \
     && cp /usr/src/php/php.ini-production ${PHP_INI_DIR}/php.ini \
     \
 # Install imagemagick
-    && for i in $(seq 1 3); do pecl install -o imagick && s=0 && break || s=$? && sleep 1; done; (exit $s) \
-    && docker-php-ext-enable imagick \
+#    && for i in $(seq 1 3); do pecl install -o imagick && s=0 && break || s=$? && sleep 1; done; (exit $s) \
+#    && docker-php-ext-enable imagick \
+
+# Imagick is installed from the archive because regular installation fails
+# See: https://github.com/Imagick/imagick/issues/643#issuecomment-1834361716
+    && curl -L -o /tmp/imagick.tar.gz https://github.com/Imagick/imagick/archive/refs/tags/3.7.0.tar.gz \
+    && tar --strip-components=1 -xf /tmp/imagick.tar.gz \
+    && phpize \
+    && ./configure \
+    && make \
+    && make install \
+    && echo "extension=imagick.so" > /usr/local/etc/php/conf.d/ext-imagick.ini \
+    && rm -rf /tmp/* \
+    # <<< End of Imagick installation
+
 # Install xdebug
     && for i in $(seq 1 3); do echo yes | pecl install -o "xdebug" && s=0 && break || s=$? && sleep 1; done; (exit $s) \
 # Install blackfire: https://blackfire.io/docs/integrations/docker
