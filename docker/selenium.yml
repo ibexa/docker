@@ -1,4 +1,3 @@
-version: '3.3'
 # Appends services to prod.yml, prod+dev, prod+redis, ..., always latest
 
 services:

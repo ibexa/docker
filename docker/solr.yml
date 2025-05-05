@@ -1,4 +1,3 @@
-version: '3.3'
 # Solr config, to be appended after base-prod or base-dev, ..., but before selenium.yml
 #
 # NOTE: You'll need to manually reindex the solr index when booting this as we don't have entrypoint for solr yet.

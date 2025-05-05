@@ -1,4 +1,3 @@
-version: '3.3'
 # Elastic config, to be appended after base-prod or base-dev, ..., but before selenium.yml
 #
 # NOTE: You'll need to manually run the command: php bin/console ibexa:elasticsearch:put-index-template.

@@ -1,9 +1,8 @@
-version: '3.3'
 # Config for running mariadb in a docker stack
 
 services:
   db:
-    image: mariadb:10.1
+    image: mariadb:10.11
     volumes:
      - ../../doc/docker/entrypoint/mysql/0_database_character_set.sh:/docker-entrypoint-initdb.d/0_database_character_set.sh:ro
      - mysql:/var/lib/mysql

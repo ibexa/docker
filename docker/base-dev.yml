@@ -1,4 +1,3 @@
-version: '3.3'
 # Single server setup for dev
 
 services:
