@@ -1,4 +1,3 @@
-version: '3.3'
 # Single server setup for dev
 
 services:
@@ -8,10 +7,10 @@ services:
      - DATABASE_DRIVER=pdo_pgsql
      - DATABASE_PLATFORM=pgsql
      - DATABASE_CHARSET=utf8
-     - DATABASE_VERSION=9.4
+     - DATABASE_VERSION=14.15
 
   db:
-    image: postgres:9.4
+    image: postgres:14.15
     environment:
       - POSTGRES_USER=$DATABASE_USER
       - POSTGRES_PASSWORD=$DATABASE_PASSWORD
