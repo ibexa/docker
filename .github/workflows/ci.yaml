@@ -24,8 +24,6 @@ jobs:
                     - "8.3"
                 node:
                     - "18"
-                    - "20"
-                    - "22"
                 product-version:
                     - "~4.6.x-dev"
                 include:
@@ -38,6 +36,12 @@ jobs:
                     - php: "8.3"
                       product-version: "~3.3.x-dev"
                       node: "18"
+                    - php: "8.0"
+                      product-version: "~4.6.x-dev"
+                      node: "20"
+                    - php: "8.3"
+                      product-version: "~4.6.x-dev"
+                      node: "22"
                     - php: "8.3"
                       product-version: "~5.0.x-dev"
                       node: "22"
