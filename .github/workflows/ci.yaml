@@ -40,12 +40,6 @@ jobs:
                       node: "18"
                     - php: "8.3"
                       product-version: "~5.0.x-dev"
-                      node: "18"
-                    - php: "8.3"
-                      product-version: "~5.0.x-dev"
-                      node: "20"
-                    - php: "8.3"
-                      product-version: "~5.0.x-dev"
                       node: "22"
 
         steps:
