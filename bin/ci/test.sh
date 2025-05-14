@@ -83,7 +83,7 @@ fi
 docker compose --env-file=.env exec -T --user www-data app sh -c "rm -rf var/cache/*"
 docker compose --env-file=.env exec -T --user www-data app php bin/console cache:clear
 # Install database & generate schema
-docker compose --env-file=.env exec -T --user www-data app sh -c "php /scripts/wait_for_db.php; php bin/console ibexa:install"
+docker compose --env-file=.env exec -T --user www-data app sh -c "php /scripts/wait_for_db.php; php bin/console ibexa:install --no-interaction"
 docker compose --env-file=.env exec -T --user www-data app sh -c "php bin/console ibexa:graphql:generate-schema"
 docker compose --env-file=.env exec -T --user www-data app sh -c "composer run post-install-cmd"
 
