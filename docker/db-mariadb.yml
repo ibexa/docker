@@ -3,7 +3,7 @@
 services:
   app:
     environment:
-      - DATABASE_VERSION=mariadb-10.11.11
+      - DATABASE_VERSION=10.11.11-MariaDB
   db:
     image: mariadb:10.11
     volumes:
