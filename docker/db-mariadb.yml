@@ -1,6 +1,9 @@
 # Config for running mariadb in a docker stack
 
 services:
+  app:
+    environment:
+      - DATABASE_VERSION=mariadb-10.11.11
   db:
     image: mariadb:10.11
     volumes:
