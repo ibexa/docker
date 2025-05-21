@@ -1,6 +1,9 @@
 # Config for running mysql in a docker stack
 
 services:
+  app:
+    environment:
+      - DATABASE_VERSION=8.4
   db:
     image: mysql:8.4
     volumes:
