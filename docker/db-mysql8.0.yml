@@ -3,7 +3,7 @@
 services:
   app:
     environment:
-      - DATABASE_VERSION=8.0.42
+      - DATABASE_VERSION=8.0
   db:
     image: mysql:8.0
     volumes:
