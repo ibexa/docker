@@ -1,6 +1,6 @@
 // Custom parameters.vcl for docker use
 
-backend ezplatform {
+backend ibexa {
     .host = "web";
     .port = "80";
 }
