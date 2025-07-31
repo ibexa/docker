@@ -19,4 +19,4 @@ RUN mkdir -p /opt/solr/server/ez/template/conf \
 ENV SOLR_HOME /opt/solr/server/ez
 
 # Make sure core is created on startup
-CMD ["solr-create", "-c", "collection1", "-d", "/opt/solr/server/ez/template"]
+CMD ["solr-create", "-c", "collection1", "-d", "/opt/solr/server/ez/template/conf"]
