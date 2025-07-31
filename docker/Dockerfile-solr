@@ -4,6 +4,8 @@ FROM solr:9
 COPY vendor/ibexa/solr/src/lib/Resources/config/solr/ /opt/solr/server/tmp
 
 # Prepare config: create template/conf, copy all required files, and apply modifications
+USER root
+
 RUN mkdir -p /opt/solr/server/ezcloud/template/conf \
  && cp -R /opt/solr/server/tmp/* /opt/solr/server/ezcloud/template/conf \
  && cp /opt/solr/server/solr/configsets/_default/conf/solrconfig.xml /opt/solr/server/ezcloud/template/conf \
@@ -14,6 +16,7 @@ RUN mkdir -p /opt/solr/server/ezcloud/template/conf \
  && sed -i.bak 's/${solr.autoSoftCommit.maxTime:-1}/${solr.autoSoftCommit.maxTime:20}/' /opt/solr/server/ezcloud/template/conf/solrconfig.xml \
  && sed -i.bak 's/<str name="field">_text_<\/str>/<str name="field">meta_content__text_t<\/str>/' /opt/solr/server/ezcloud/template/conf/solrconfig.xml \
  && sed -i.bak 's/<requestHandler name="\/select" class="solr.SearchHandler">/<requestHandler name="\/select" class="solr.SearchHandler">\\n    <arr name="last-components">\\n      <str>spellcheck<\/str>\\n    <\/arr>/' /opt/solr/server/ezcloud/template/conf/solrconfig.xml
+USER solr
 
 # Set our core config as home
 ENV SOLR_HOME /opt/solr/server/ezcloud
