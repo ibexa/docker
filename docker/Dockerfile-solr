@@ -22,4 +22,4 @@ USER solr
 ENV SOLR_HOME /opt/solr/server/ezcloud
 
 # Make sure core is created on startup
-CMD ["solr-create", "-c", "collection1", "-d", "/opt/solr/server/ezcloud/template/conf"]
+CMD ["solr-create", "-c", "core0", "-d", "/opt/solr/server/ezcloud/template/conf"]
