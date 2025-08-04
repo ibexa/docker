@@ -10,9 +10,9 @@ COPY vendor/ibexa/solr/src/lib/Resources/config/solr/language-fieldtypes.xml /op
 
 # Prepare config
 USER root
-RUN cp /opt/solr/server/solr/configsets/basic_configs/conf/solrconfig.xml /opt/solr/server/ezcloud/template/ \
- && cp /opt/solr/server/solr/configsets/basic_configs/conf/stopwords.txt /opt/solr/server/ezcloud/template/ \
- && cp /opt/solr/server/solr/configsets/basic_configs/conf/synonyms.txt /opt/solr/server/ezcloud/template/ \
+RUN cp /opt/solr/server/solr/configsets/_default/conf/solrconfig.xml /opt/solr/server/ezcloud/template/ \
+ && cp /opt/solr/server/solr/configsets/_default/conf/stopwords.txt /opt/solr/server/ezcloud/template/ \
+ && cp /opt/solr/server/solr/configsets/_default/conf/synonyms.txt /opt/solr/server/ezcloud/template/ \
  && cp /opt/solr/server/solr/solr.xml /opt/solr/server/ezcloud \
  && sed -i.bak '/<updateRequestProcessorChain name="add-unknown-fields-to-the-schema">/,/<\/updateRequestProcessorChain>/d' /opt/solr/server/ezcloud/template/solrconfig.xml \
  && sed -ie 's/${solr.autoSoftCommit.maxTime:-1}/${solr.autoSoftCommit.maxTime:20}/' /opt/solr/server/ezcloud/template/solrconfig.xml
