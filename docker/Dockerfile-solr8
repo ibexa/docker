@@ -1,4 +1,4 @@
-FROM solr:8
+FROM solr:8.11.2
 
 # Copy solr config from the version used by eZ Platform
 COPY vendor/ibexa/solr/src/lib/Resources/config/solr/ /opt/solr/server/tmp
