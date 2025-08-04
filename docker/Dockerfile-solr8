@@ -23,12 +23,4 @@ USER solr
 ENV SOLR_HOME /opt/solr/server/ezcloud
 
 # Make sure core is created on startup
-CMD ["bash", "-c", "\
-  solr-create -c core0 -d /opt/solr/server/ezcloud/template && \
-    solr-create -c core1 -d /opt/solr/server/ezcloud/template && \
-    solr-create -c core2 -d /opt/solr/server/ezcloud/template && \
-    solr-create -c core3 -d /opt/solr/server/ezcloud/template && \
-    solr-create -c core4 -d /opt/solr/server/ezcloud/template && \
-    solr-create -c core5 -d /opt/solr/server/ezcloud/template && \
-  solr-foreground \
-"]
+CMD ["solr-create", "-c", "core0", "-d", "/opt/solr/server/ezcloud/template"]
