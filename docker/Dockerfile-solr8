@@ -9,6 +9,7 @@ RUN mkdir -p /opt/solr/server/ezcloud/template
 COPY vendor/ibexa/solr/src/lib/Resources/config/solr/schema.xml /opt/solr/server/ezcloud/template/
 COPY vendor/ibexa/solr/src/lib/Resources/config/solr/custom-fields-types.xml /opt/solr/server/ezcloud/template/
 COPY vendor/ibexa/solr/src/lib/Resources/config/solr/language-fieldtypes.xml /opt/solr/server/ezcloud/template/
+COPY vendor/ibexa/solr/src/lib/Resources/config/solr/solr.languages /opt/solr/server/ezcloud/template/
 
 # Prepare config
 
