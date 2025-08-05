@@ -1,6 +1,7 @@
 FROM solr:8-alpine
 
 # Copy solr config from the version used by eZ Platform
+USER root
 COPY vendor/ibexa/solr/src/lib/Resources/config/solr/ /opt/solr/server/tmp
 
 # Copy custom config files
@@ -10,7 +11,7 @@ COPY vendor/ibexa/solr/src/lib/Resources/config/solr/custom-fields-types.xml /op
 COPY vendor/ibexa/solr/src/lib/Resources/config/solr/language-fieldtypes.xml /opt/solr/server/ezcloud/template/
 
 # Prepare config
-USER root
+
 RUN cp /opt/solr/server/solr/configsets/_default/conf/solrconfig.xml /opt/solr/server/ezcloud/template/ \
  && cp /opt/solr/server/solr/configsets/_default/conf/stopwords.txt /opt/solr/server/ezcloud/template/ \
  && cp /opt/solr/server/solr/configsets/_default/conf/synonyms.txt /opt/solr/server/ezcloud/template/ \
