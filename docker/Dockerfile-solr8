@@ -5,7 +5,8 @@ USER root
 COPY vendor/ibexa/solr/src/lib/Resources/config/solr/ /opt/solr/server/tmp
 
 # Copy custom config files
-RUN mkdir -p /opt/solr/server/ezcloud/template
+RUN mkdir -p /opt/solr/server/ezcloud/template \
+ && chown -R solr:solr /opt/solr/server/ezcloud
 COPY vendor/ibexa/solr/src/lib/Resources/config/solr/schema.xml /opt/solr/server/ezcloud/template/
 COPY vendor/ibexa/solr/src/lib/Resources/config/solr/custom-fields-types.xml /opt/solr/server/ezcloud/template/
 COPY vendor/ibexa/solr/src/lib/Resources/config/solr/language-fieldtypes.xml /opt/solr/server/ezcloud/template/
@@ -23,7 +24,8 @@ RUN cp /opt/solr/server/solr/configsets/_default/conf/solrconfig.xml /opt/solr/s
 USER solr
 
 # Set our core config as home
-ENV SOLR_HOME /opt/solr/server/ezcloud
+#ENV SOLR_HOME /opt/solr/server/ezcloud
+ENV SOLR_HOME /var/solr/data
 
 # Make sure core is created on startup
 CMD ["solr-create", "-c", "core0", "-d", "/opt/solr/server/ezcloud/template"]
