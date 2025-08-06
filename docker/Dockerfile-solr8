@@ -1,0 +1,24 @@
+FROM solr:8-alpine
+
+USER root
+COPY vendor/ibexa/solr/src/lib/Resources/config/solr/ /opt/solr/server/tmp
+
+RUN mkdir -p /opt/solr/server/ezcloud/template \
+ && chown -R solr:solr /opt/solr/server/ezcloud
+COPY vendor/ibexa/solr/src/lib/Resources/config/solr/schema.xml /opt/solr/server/ezcloud/template/
+COPY vendor/ibexa/solr/src/lib/Resources/config/solr/custom-fields-types.xml /opt/solr/server/ezcloud/template/
+COPY vendor/ibexa/solr/src/lib/Resources/config/solr/language-fieldtypes.xml /opt/solr/server/ezcloud/template/
+COPY vendor/ibexa/solr/src/lib/Resources/config/solr/solr.languages /opt/solr/server/ezcloud/template/
+
+RUN cp /opt/solr/server/solr/configsets/_default/conf/solrconfig.xml /opt/solr/server/ezcloud/template/ \
+ && cp /opt/solr/server/solr/configsets/_default/conf/stopwords.txt /opt/solr/server/ezcloud/template/ \
+ && cp /opt/solr/server/solr/configsets/_default/conf/synonyms.txt /opt/solr/server/ezcloud/template/ \
+ && cp /opt/solr/server/solr/solr.xml /opt/solr/server/ezcloud \
+ && sed -i.bak '/<updateRequestProcessorChain name="add-unknown-fields-to-the-schema">/,/<\/updateRequestProcessorChain>/d' /opt/solr/server/ezcloud/template/solrconfig.xml \
+ && sed -ie 's/${solr.autoSoftCommit.maxTime:-1}/${solr.autoSoftCommit.maxTime:20}/' /opt/solr/server/ezcloud/template/solrconfig.xml
+
+USER solr
+
+ENV SOLR_HOME /var/solr/data
+
+CMD ["solr-create", "-c", "collection1", "-d", "/opt/solr/server/ezcloud/template"]
