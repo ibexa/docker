@@ -30,7 +30,7 @@ RUN cp /opt/solr/server/solr/configsets/_default/conf/solrconfig.xml /opt/solr/s
 USER solr
 
 # Set the Solr home directory environment variable
-ENV SOLR_HOME /var/solr/data
+ENV SOLR_HOME /opt/solr/server/ezcloud
 
 # Start Solr and create a new collection using the custom template
-CMD ["solr-create", "-c", "collection1", "-d", "/opt/solr/server/ezcloud/template"]
+CMD ["solr", "create_core", "-c", "collection1", "-d", "/opt/solr/server/ezcloud/template"]
