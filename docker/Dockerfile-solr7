@@ -18,7 +18,7 @@ RUN mkdir -p /opt/solr/server/ezcloud/template \
 
 # Copy default Solr config files into the template and adjust solrconfig.xml as needed
 RUN cp -R /opt/solr/server/tmp/* /opt/solr/server/ezcloud/template \
-cp /opt/solr/server/solr/configsets/_default/conf/solrconfig.xml /opt/solr/server/ezcloud/template/ \
+&& cp /opt/solr/server/solr/configsets/_default/conf/solrconfig.xml /opt/solr/server/ezcloud/template/ \
  && cp /opt/solr/server/solr/configsets/_default/conf/stopwords.txt /opt/solr/server/ezcloud/template/ \
  && cp /opt/solr/server/solr/configsets/_default/conf/synonyms.txt /opt/solr/server/ezcloud/template/ \
  && cp /opt/solr/server/solr/solr.xml /opt/solr/server/ezcloud \
