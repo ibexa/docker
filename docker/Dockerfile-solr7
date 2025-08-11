@@ -21,6 +21,8 @@ RUN cp /opt/solr/server/solr/configsets/_default/conf/solrconfig.xml /opt/solr/s
  && cp /opt/solr/server/solr/configsets/_default/conf/stopwords.txt /opt/solr/server/ezcloud/template/ \
  && cp /opt/solr/server/solr/configsets/_default/conf/synonyms.txt /opt/solr/server/ezcloud/template/ \
  && cp /opt/solr/server/solr/solr.xml /opt/solr/server/ezcloud \
+&& cp /opt/solr/server/solr/configsets/sample_techproducts_configs/conf/currency.xml /opt/solr/server/ezcloud \
+&& cp /opt/solr/server/solr/configsets/sample_techproducts_configs/conf/elevate.xml /opt/solr/server/ezcloud \
  # Remove the updateRequestProcessorChain block from solrconfig.xml
  && sed -i.bak '/<updateRequestProcessorChain name="add-unknown-fields-to-the-schema">/,/<\/updateRequestProcessorChain>/d' /opt/solr/server/ezcloud/template/solrconfig.xml \
  # Change the autoSoftCommit maxTime default value in solrconfig.xml
