@@ -1,14 +1,10 @@
 FROM solr:7-alpine
 
-# Switch to root user to perform setup tasks
-#USER root
-
 # Copy all Solr configuration files from the project into a temporary directory in the container
 COPY vendor/ibexa/solr/src/lib/Resources/config/solr/ /opt/solr/server/tmp
 
 # Create the ezcloud template directory and set correct ownership for Solr
 RUN mkdir -p /opt/solr/server/ezcloud/template
-# && chown -R solr:solr /opt/solr/server/ezcloud
 
 # Copy specific Solr configuration files into the template directory
 COPY vendor/ibexa/solr/src/lib/Resources/config/solr/schema.xml /opt/solr/server/ezcloud/template/
@@ -29,12 +25,8 @@ RUN cp -R /opt/solr/server/tmp/* /opt/solr/server/ezcloud/template \
  # Change the autoSoftCommit maxTime default value in solrconfig.xml
  && sed -ie 's/${solr.autoSoftCommit.maxTime:-1}/${solr.autoSoftCommit.maxTime:20}/' /opt/solr/server/ezcloud/template/solrconfig.xml
 
-# Switch back to the solr user for running Solr
-#USER solr
-
 # Set the Solr home directory environment variable
 ENV SOLR_HOME /opt/solr/server/ezcloud
 
 # Start Solr and create a new collection using the custom template
 CMD ["solr-create", "-c", "collection1", "-d", "/opt/solr/server/ezcloud/template"]
-#CMD ["solr", "create_core", "-c", "collection1", "-d", "/opt/solr/server/ezcloud/template"]
