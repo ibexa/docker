@@ -4,7 +4,7 @@ FROM solr:7-alpine
 #USER root
 
 # Copy all Solr configuration files from the project into a temporary directory in the container
-#COPY vendor/ibexa/solr/src/lib/Resources/config/solr/ /opt/solr/server/tmp
+COPY vendor/ibexa/solr/src/lib/Resources/config/solr/ /opt/solr/server/tmp
 
 # Create the ezcloud template directory and set correct ownership for Solr
 RUN mkdir -p /opt/solr/server/ezcloud/template
@@ -17,7 +17,8 @@ COPY vendor/ibexa/solr/src/lib/Resources/config/solr/language-fieldtypes.xml /op
 COPY vendor/ibexa/solr/src/lib/Resources/config/solr/solr.languages /opt/solr/server/ezcloud/template/
 
 # Copy default Solr config files into the template and adjust solrconfig.xml as needed
-RUN cp /opt/solr/server/solr/configsets/_default/conf/solrconfig.xml /opt/solr/server/ezcloud/template/ \
+RUN cp -R /opt/solr/server/tmp/* /opt/solr/server/ezcloud/template \
+&& cp /opt/solr/server/solr/configsets/_default/conf/solrconfig.xml /opt/solr/server/ezcloud/template/ \
  && cp /opt/solr/server/solr/configsets/_default/conf/stopwords.txt /opt/solr/server/ezcloud/template/ \
  && cp /opt/solr/server/solr/configsets/_default/conf/synonyms.txt /opt/solr/server/ezcloud/template/ \
  && cp /opt/solr/server/solr/solr.xml /opt/solr/server/ezcloud \
@@ -35,4 +36,5 @@ RUN cp /opt/solr/server/solr/configsets/_default/conf/solrconfig.xml /opt/solr/s
 ENV SOLR_HOME /opt/solr/server/ezcloud
 
 # Start Solr and create a new collection using the custom template
-CMD ["solr", "create_core", "-c", "collection1", "-d", "/opt/solr/server/ezcloud/template"]
+CMD ["solr-create", "-c", "collection1", "-d", "/opt/solr/server/ezcloud/template"]
+#CMD ["solr", "create_core", "-c", "collection1", "-d", "/opt/solr/server/ezcloud/template"]
