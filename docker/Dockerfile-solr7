@@ -1,0 +1,32 @@
+FROM solr:7-alpine
+
+# Copy all Solr configuration files from the project into a temporary directory in the container
+COPY vendor/ibexa/solr/src/lib/Resources/config/solr/ /opt/solr/server/tmp
+
+# Create the ezcloud template directory and set correct ownership for Solr
+RUN mkdir -p /opt/solr/server/ezcloud/template
+
+# Copy specific Solr configuration files into the template directory
+COPY vendor/ibexa/solr/src/lib/Resources/config/solr/schema.xml /opt/solr/server/ezcloud/template/
+COPY vendor/ibexa/solr/src/lib/Resources/config/solr/custom-fields-types.xml /opt/solr/server/ezcloud/template/
+COPY vendor/ibexa/solr/src/lib/Resources/config/solr/language-fieldtypes.xml /opt/solr/server/ezcloud/template/
+COPY vendor/ibexa/solr/src/lib/Resources/config/solr/solr.languages /opt/solr/server/ezcloud/template/
+
+# Copy default Solr config files into the template and adjust solrconfig.xml as needed
+RUN cp -R /opt/solr/server/tmp/* /opt/solr/server/ezcloud/template \
+&& cp /opt/solr/server/solr/configsets/_default/conf/solrconfig.xml /opt/solr/server/ezcloud/template/ \
+ && cp /opt/solr/server/solr/configsets/_default/conf/stopwords.txt /opt/solr/server/ezcloud/template/ \
+ && cp /opt/solr/server/solr/configsets/_default/conf/synonyms.txt /opt/solr/server/ezcloud/template/ \
+ && cp /opt/solr/server/solr/solr.xml /opt/solr/server/ezcloud \
+&& cp /opt/solr/server/solr/configsets/sample_techproducts_configs/conf/currency.xml /opt/solr/server/ezcloud \
+&& cp /opt/solr/server/solr/configsets/sample_techproducts_configs/conf/elevate.xml /opt/solr/server/ezcloud \
+ # Remove the updateRequestProcessorChain block from solrconfig.xml
+ && sed -i.bak '/<updateRequestProcessorChain name="add-unknown-fields-to-the-schema">/,/<\/updateRequestProcessorChain>/d' /opt/solr/server/ezcloud/template/solrconfig.xml \
+ # Change the autoSoftCommit maxTime default value in solrconfig.xml
+ && sed -ie 's/${solr.autoSoftCommit.maxTime:-1}/${solr.autoSoftCommit.maxTime:20}/' /opt/solr/server/ezcloud/template/solrconfig.xml
+
+# Set the Solr home directory environment variable
+ENV SOLR_HOME /opt/solr/server/ezcloud
+
+# Start Solr and create a new collection using the custom template
+CMD ["solr-create", "-c", "collection1", "-d", "/opt/solr/server/ezcloud/template"]
