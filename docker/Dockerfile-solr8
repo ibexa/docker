@@ -1,4 +1,4 @@
-FROM solr:8-alpine
+FROM solr:8-slim
 
 # Switch to root user to perform setup tasks
 USER root
