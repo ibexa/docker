@@ -7,10 +7,10 @@ services:
      - DATABASE_DRIVER=pdo_pgsql
      - DATABASE_PLATFORM=pgsql
      - DATABASE_CHARSET=utf8
-     - DATABASE_VERSION=18rc1
+     - DATABASE_VERSION=18.0
 
   db:
-    image: postgres:18rc1
+    image: postgres:18.0
     environment:
       - POSTGRES_USER=$DATABASE_USER
       - POSTGRES_PASSWORD=$DATABASE_PASSWORD
