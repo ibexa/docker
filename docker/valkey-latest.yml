@@ -5,8 +5,8 @@ services:
         depends_on:
             - valkey
         environment:
-            - CACHE_POOL=cache.valkey
-            - CACHE_DSN=valkey:6379
+            - CACHE_POOL=cache.redis
+            - CACHE_DSN=redis:6379
             - CACHE_NAMESPACE
 
     valkey:
