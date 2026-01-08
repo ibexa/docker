@@ -2,7 +2,7 @@
 
 ## WARNING:
 # This service is currently work in progress, is not tested by CI, and thus not guaranteed to work.
-# You are however more then welcome to try it out and help make it stable.
+# You are however more than welcome to try it out and help make it stable.
 
 services:
   app:
