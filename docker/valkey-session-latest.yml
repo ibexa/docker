@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+    app:
+        depends_on:
+            - valkey-session
+        environment:
+            - SESSION_HANDLER_ID=Ibexa\Bundle\Core\Session\Handler\NativeSessionHandler
+            - SESSION_SAVE_PATH=tcp://valkey-session:6379?weight=1
+
+    valkey-session:
+        image: "valkey/valkey:latest"
+        container_name: valkey-session
+        ports:
+            - "6379:6379"
+        command: ["valkey-server", "--save", "", "--appendonly", "no"]
+        restart: "no"
+        networks:
+            - backend
