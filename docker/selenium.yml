@@ -27,3 +27,5 @@ services:
      - BEHAT_WEB_HOST=$WEB_HOST
      - WEB_HOST=$WEB_HOST
      - CLOUDINARY_URL
+    volumes:
+     - ./build/project:/var/www/html/build/project
