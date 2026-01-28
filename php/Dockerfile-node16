@@ -8,7 +8,9 @@ RUN apt-get update -y \
     && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install -y nodejs \
     \
-    && corepack enable \
-    && corepack prepare yarn@stable --activate \
+    && npm install -g yarn@1.22.22 \
+    \
+    && node -v \
+    && yarn -v \
     \
     && rm -rf /var/lib/apt/lists/*
