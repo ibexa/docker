@@ -7,22 +7,22 @@
 # You are however more then welcome to try it out and help make it stable.
 
 services:
-    app:
-        depends_on:
-            - elasticsearch
-        environment:
-            - SEARCH_ENGINE=elasticsearch
-            - ELASTICSEARCH_DSN=elasticsearch:9200
+  app:
+    depends_on:
+      - elasticsearch
+    environment:
+      - SEARCH_ENGINE=elasticsearch
+      - ELASTICSEARCH_DSN=elasticsearch:9200
 
-    elasticsearch:
-        image: docker.elastic.co/elasticsearch/elasticsearch:8.19.9
-        ports:
-            - "9200:9200"
-            - "9300:9300"
-        environment:
-            - discovery.type=single-node
-            - xpack.security.enabled=false
-            - xpack.security.http.ssl.enabled=false
-        networks:
-            - frontend
-            - backend
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.19.9
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+    networks:
+      - frontend
+      - backend
