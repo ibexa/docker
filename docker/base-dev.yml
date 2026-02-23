@@ -6,7 +6,6 @@ services:
     volumes:
      - ${COMPOSE_DIR}/../../:/var/www:cached
      - ${COMPOSER_HOME}:/root/.composer:cached
-     - ./behat-output:/var/www/behat-output
     depends_on:
      - db
     environment:

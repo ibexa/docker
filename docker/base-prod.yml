@@ -65,8 +65,6 @@ services:
      - backend
 
 volumes:
-  behat-output:
-  behat-report:
   vardir:
   dbdump:
 
