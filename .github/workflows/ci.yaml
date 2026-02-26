@@ -19,33 +19,33 @@ jobs:
             fail-fast: false
             matrix:
                 php:
-                    - "7.4"
+                    - "8.4"
                 node:
-                    - "20"
+                    - "22"
                 product-version:
                     - "~4.6.x-dev"
-#                include:
-#                    - php: "7.3"
-#                      product-version: "~3.3.x-dev"
-#                      node: "14"
-#                    - php: "7.4"
-#                      product-version: "~3.3.x-dev"
-#                      node: "16"
-#                    - php: "8.3"
-#                      product-version: "~3.3.x-dev"
-#                      node: "18"
-#                    - php: "7.4"
-#                      product-version: "~4.6.x-dev"
-#                      node: "18"
-#                    - php: "8.0"
-#                      product-version: "~4.6.x-dev"
-#                      node: "20"
-#                    - php: "8.3"
-#                      product-version: "~5.0.x-dev"
-#                      node: "22"
-#                    - php: "8.4"
-#                      product-version: "~5.0.x-dev"
-#                      node: "22"
+                include:
+                    - php: "7.3"
+                      product-version: "~3.3.x-dev"
+                      node: "14"
+                    - php: "7.4"
+                      product-version: "~3.3.x-dev"
+                      node: "16"
+                    - php: "8.3"
+                      product-version: "~3.3.x-dev"
+                      node: "18"
+                    - php: "7.4"
+                      product-version: "~4.6.x-dev"
+                      node: "18"
+                    - php: "8.0"
+                      product-version: "~4.6.x-dev"
+                      node: "20"
+                    - php: "8.3"
+                      product-version: "~5.0.x-dev"
+                      node: "22"
+                    - php: "8.4"
+                      product-version: "~5.0.x-dev"
+                      node: "22"
 
         steps:
             - uses: actions/checkout@v4
