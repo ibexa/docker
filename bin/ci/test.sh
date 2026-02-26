@@ -23,7 +23,7 @@ APP_ENV="prod"
 
 BEHAT_REQUIREMENT="ibexa/behat:$PRODUCT_VERSION"
 if [ "$PRODUCT_VERSION" = "~3.3.x-dev" ]; then
-    BEHAT_REQUIREMENT="ezsystems/behatbundle:dev-bump-psy"
+    BEHAT_REQUIREMENT="ezsystems/behatbundle:dev-bump-psy as 8.3.x-dev"
 fi
 
 if [ "$REUSE_VOLUME" = "0" ]; then
