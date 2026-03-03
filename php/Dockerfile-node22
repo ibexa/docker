@@ -2,7 +2,7 @@ FROM ibexa_php:latest
 
 # Install Node.js and Yarn
 RUN apt-get update -q -y \
-    && apt-get install -q -y --no-install-recommends gnupg \ 
+    && apt-get install -q -y --no-install-recommends gnupg \
     && curl -sL https://deb.nodesource.com/setup_22.x | bash - \
     && apt-get install -y nodejs \
     && curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
