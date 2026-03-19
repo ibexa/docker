@@ -9,6 +9,6 @@ RUN apt-get update -y \
     && apt-get install -y nodejs \
     \
     && corepack enable \
-    && corepack prepare yarn@stable --activate \
+    && corepack prepare yarn@1.22.22 --activate \
     \
     && rm -rf /var/lib/apt/lists/*
