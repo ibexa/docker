@@ -3,12 +3,16 @@ FROM ibexa_php:latest
 # Install Node.js and Yarn
 RUN apt-get update -y \
     && apt-get install -y --no-install-recommends \
-        ca-certificates curl gnupg \
+        ca-certificates curl \
     \
     && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     \
-    && corepack enable \
-    && corepack prepare yarn@stable --activate \
+    && node -v \
+    && npm -v \
+    \
+    && npm install -g yarn@1.22.22 \
+    \
+    && yarn -v \
     \
     && rm -rf /var/lib/apt/lists/*
