@@ -45,6 +45,7 @@ if [ "$REUSE_VOLUME" = "0" ]; then
         ibexa_php:latest-node \
         bash -c "
         composer --version &&
+        composer create-project --no-progress --no-interaction $COMPOSER_OPTIONS ibexa/website-skeleton /var/www $PRODUCT_VERSION &&
         cd /var/www
 
         add_audit_ignores() {
@@ -97,7 +98,6 @@ if [ "$REUSE_VOLUME" = "0" ]; then
             \"The affected version of 3rd party component is installed on PHP \${PHP_VERSION}. There is no alternative supporting PHP \${PHP_VERSION}. Consider upgrading to PHP 8.1+\" \
             \"\${PHP74_PHP80_ADVISORIES[@]}\"
         fi &&
-        composer create-project --no-progress --no-interaction $COMPOSER_OPTIONS ibexa/website-skeleton /var/www $PRODUCT_VERSION &&
         composer require ibexa/oss:$PRODUCT_VERSION -W  --no-scripts $COMPOSER_OPTIONS
         git init && git add . && git commit -m 'Init'
         composer recipes:install ibexa/oss --force --reset -v
