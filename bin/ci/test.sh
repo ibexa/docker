@@ -45,6 +45,7 @@ if [ "$REUSE_VOLUME" = "0" ]; then
         ibexa_php:latest-node \
         bash -c "
         composer --version &&
+        composer config audit.ignore --json --merge \"{\"PKSA-2rbx-bjdx-4d4d\":\"lorem\"}\" &&
         composer create-project --no-progress --no-interaction $COMPOSER_OPTIONS ibexa/website-skeleton /var/www $PRODUCT_VERSION &&
         composer require ibexa/oss:$PRODUCT_VERSION -W  --no-scripts $COMPOSER_OPTIONS
         git init && git add . && git commit -m 'Init'
