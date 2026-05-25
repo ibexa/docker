@@ -45,6 +45,8 @@ if [ "$REUSE_VOLUME" = "0" ]; then
         ibexa_php:latest-node \
         bash -c "
         composer --version &&
+        cd /var/www
+
         add_audit_ignores() {
           local reason=\$1
           shift
