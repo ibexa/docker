@@ -1,0 +1,23 @@
+FROM varnish:9.0
+
+SHELL ["/bin/bash", "-c"]
+
+# set the user to root, and install build dependencies
+USER root
+RUN set -e && \
+    read -ra vmod_deps <<< "$VMOD_DEPS" && \
+    apt-get update && \
+    apt-get -y --no-install-recommends install "${vmod_deps[@]}" && \
+    install-vmod https://github.com/varnish/varnish-modules/releases/download/0.28.0/varnish-modules-0.28.0.tar.gz && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY vendor/ibexa/http-cache/docs/varnish/vcl/varnish9.vcl /etc/varnish/default.vcl
+COPY doc/docker/entrypoint/varnish/parameters.vcl /etc/varnish/parameters.vcl
+COPY doc/docker/entrypoint/varnish/entrypoint.sh /entrypoint.sh
+
+# entrypoint.sh writes into /etc/varnish at runtime (parameters.vcl.template), so hand the
+# directory to the non-root "varnish" user the base image already runs as by default
+RUN chown -R varnish:varnish /etc/varnish
+USER varnish
+
+ENTRYPOINT ["/entrypoint.sh"]
