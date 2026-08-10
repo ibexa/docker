@@ -1,4 +1,3 @@
-version: '3.3'
 
 ## WARNING!
 # This service is currently work in progress, is not tested by CI, and thus not guaranteed to work.
@@ -9,7 +8,7 @@ services:
     environment:
      - APP_HTTP_CACHE=0
      # Never do this in production if the app container is accesible for the public as well
-     # See https://developers.ibexa.co/security-advisories/ezsa-2020-002-unauthorised-cache-purge-with-misconfigured-fastly
+     # See https://developers.ibexa.co/security-advisories/ezsa-2020-002-unauthorised-cache-purge-with-misconfigured-fastly for more details about how it could be abuse
      - TRUSTED_PROXIES=REMOTE_ADDR
      - HTTPCACHE_PURGE_SERVER=http://varnish
      - HTTPCACHE_PURGE_TYPE=varnish
@@ -34,7 +33,7 @@ services:
 
 ## DEBUG??
 # In need of debugging all request going to Varnish, use varnishlog, example:
-#   dockercompose exec varnish varnishlog -c -i ReqURL,ReqMethod -I ReqHeader:xkey
+#   docker compose exec varnish varnishlog -c -i ReqURL,ReqMethod -I ReqHeader:xkey
 #  Or more relevant only PURGE's with all info:
 #   docker compose exec varnish varnishlog -g request -q "ReqMethod eq 'PURGE'"
 #
