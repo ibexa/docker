@@ -1,5 +1,3 @@
-version: '3.3'
-# Simple single server setup for prod
 
 ## WARNING!
 # This service is currently work in progress, is not tested by CI, and thus not guaranteed to work.
@@ -10,7 +8,7 @@ services:
     environment:
      - APP_HTTP_CACHE=0
      # Never do this in production if the app container is accesible for the public as well
-     # See https://developers.ibexa.co/security-advisories/ezsa-2020-002-unauthorised-cache-purge-with-misconfigured-fastly for more details how it could be abused
+     # See https://developers.ibexa.co/security-advisories/ezsa-2020-002-unauthorised-cache-purge-with-misconfigured-fastly for more details about how it could be abused
      - TRUSTED_PROXIES=REMOTE_ADDR
      - HTTPCACHE_PURGE_SERVER=http://varnish
      - HTTPCACHE_PURGE_TYPE=varnish
@@ -42,4 +40,3 @@ services:
 #  But before doing that check that http and not local purge client is set:
 #   docker compose exec app bin/console --env=dev debug:container ibexa.http_cache.purge_client_internal
 #
-# And if in prod make sure you have rebuilt app container on code changes ;)
