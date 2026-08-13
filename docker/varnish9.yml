@@ -8,7 +8,7 @@ services:
     environment:
      - APP_HTTP_CACHE=0
      # Never do this in production if the app container is accesible for the public as well
-     # See https://developers.ibexa.co/security-advisories/ezsa-2020-002-unauthorised-cache-purge-with-misconfigured-fastly for more details about how it could be abuse
+     # See https://developers.ibexa.co/security-advisories/ezsa-2020-002-unauthorised-cache-purge-with-misconfigured-fastly for more details about how it could be abused
      - TRUSTED_PROXIES=REMOTE_ADDR
      - HTTPCACHE_PURGE_SERVER=http://varnish
      - HTTPCACHE_PURGE_TYPE=varnish
