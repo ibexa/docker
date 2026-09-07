@@ -5,6 +5,23 @@ FROM php:8.0-fpm-bullseye
 # Set defaults for variables used by run.sh
 ENV COMPOSER_HOME=/root/.composer
 
+# Debian 11 (bullseye) reached end of LTS on 2026-08-31. Its packages are being
+# removed from deb.debian.org while the indexes still advertise them, so a plain
+# apt-get install fails with sporadic 404s. There is no bookworm variant of this
+# PHP version, so pin apt to a snapshot taken before the EOL instead.
+# Can be dropped once bullseye-security is available on archive.debian.org.
+ARG DEBIAN_SNAPSHOT=20260828T000000Z
+RUN set -xe \
+    && printf '%s\n' \
+        "deb http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT} bullseye main" \
+        "deb http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT} bullseye-updates main" \
+        "deb http://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT} bullseye-security main" \
+        > /etc/apt/sources.list \
+    && printf '%s\n' \
+        'Acquire::Check-Valid-Until "false";' \
+        'Acquire::Retries "5";' \
+        > /etc/apt/apt.conf.d/99-debian-snapshot
+
 # Get packages that we need in container
 RUN apt-get update -q -y \
     && apt-get install -q -y --no-install-recommends \
