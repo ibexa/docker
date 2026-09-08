@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 
 ENV VARNISH_MALLOC_SIZE="256M" \
     DEBIAN_FRONTEND=noninteractive
@@ -21,7 +21,7 @@ RUN set -xe \
             pkg-config \
             python3-docutils \
             sphinx-common \
-            varnish-dev=6.0.12-1~bullseye \
+            varnish-dev=6.0.12-1~bookworm \
         " \
     # Update apt and get dependencies
         && apt-get update -q -y \
@@ -29,7 +29,7 @@ RUN set -xe \
         \
     # Get official Varnish package
         && curl -s ${PACKAGECLOUD_URL} | bash \
-        && apt-get install -q -y --allow-unauthenticated --no-install-recommends varnish=6.0.12-1~bullseye $buildDeps \
+        && apt-get install -q -y --allow-unauthenticated --no-install-recommends varnish=6.0.12-1~bookworm $buildDeps \
         \
     # Install varnish modules
         && curl -A "Docker" -o /tmp/varnish-modules.tar.gz -D - -L -s https://github.com/varnish/varnish-modules/archive/refs/tags/${VARNISH_MODULES_VERSION}.tar.gz \

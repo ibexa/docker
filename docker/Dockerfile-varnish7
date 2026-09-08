@@ -1,4 +1,4 @@
-FROM varnish:7.1
+FROM varnish:7.4
 
 # set the user to root, and install build dependencies
 USER root
@@ -7,7 +7,7 @@ RUN set -e; \
     apt-get -y install $VMOD_DEPS /pkgs/*.deb; \
     \
 # install one, possibly multiple vmods
-   install-vmod https://github.com/varnish/varnish-modules/releases/download/0.20.0/varnish-modules-0.20.0.tar.gz; \
+   install-vmod https://github.com/varnish/varnish-modules/releases/download/0.23.0/varnish-modules-0.23.0.tar.gz; \
     \
 # clean up and set the user back to varnish
     rm -rf /var/lib/apt/lists/*
