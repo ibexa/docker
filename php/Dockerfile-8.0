@@ -11,6 +11,8 @@ ENV COMPOSER_HOME=/root/.composer
 # PHP version, so pin apt to a snapshot taken before the EOL instead.
 # Can be dropped once bullseye-security is available on archive.debian.org.
 ARG DEBIAN_SNAPSHOT=20260828T000000Z
+
+# Get packages that we need in container
 RUN set -xe \
     && printf '%s\n' \
         "deb https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT} bullseye main" \
@@ -20,10 +22,8 @@ RUN set -xe \
     && printf '%s\n' \
         'Acquire::Check-Valid-Until "false";' \
         'Acquire::Retries "5";' \
-        > /etc/apt/apt.conf.d/99-debian-snapshot
-
-# Get packages that we need in container
-RUN apt-get update -q -y \
+        > /etc/apt/apt.conf.d/99-debian-snapshot \
+    && apt-get update -q -y \
     && apt-get install -q -y --no-install-recommends \
         ca-certificates \
         curl \
