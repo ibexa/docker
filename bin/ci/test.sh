@@ -39,6 +39,7 @@ if [ "$REUSE_VOLUME" = "0" ]; then
     printf "\nBuilding on ibexa_php:latest, composer will implicit check requirements\n"
     docker run -i --rm \
         -e APP_ENV \
+        -e COMPOSER_AUTH \
         -e PHP_INI_ENV_memory_limit=3G \
         -v $(pwd)/volumes/ezplatform:/var/www \
         -v  $COMPOSER_HOME:/root/.composer \
