@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-bullseye
+FROM php:8.3-fpm-bookworm
 
 # Container containing php-fpm and php-cli to run and interact with Ibexa DXP
 
@@ -19,7 +19,7 @@ RUN apt-get update -q -y \
         libxpm4 \
         libpng16-16 \
     # intl
-        libicu67 \
+        libicu72 \
     # xslt
         libxslt1.1 \
     # memcached
