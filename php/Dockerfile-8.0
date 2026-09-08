@@ -13,9 +13,9 @@ ENV COMPOSER_HOME=/root/.composer
 ARG DEBIAN_SNAPSHOT=20260828T000000Z
 RUN set -xe \
     && printf '%s\n' \
-        "deb http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT} bullseye main" \
-        "deb http://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT} bullseye-updates main" \
-        "deb http://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT} bullseye-security main" \
+        "deb https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT} bullseye main" \
+        "deb https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT} bullseye-updates main" \
+        "deb https://snapshot.debian.org/archive/debian-security/${DEBIAN_SNAPSHOT} bullseye-security main" \
         > /etc/apt/sources.list \
     && printf '%s\n' \
         'Acquire::Check-Valid-Until "false";' \
