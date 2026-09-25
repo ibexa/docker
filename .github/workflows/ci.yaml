@@ -18,25 +18,19 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php:
-                    - "8.4"
-                product-version:
-                    - "~4.6.x-dev"
-                node:
-                    - "22"
                 include:
-                    - php: "7.4"
+                    - php: "8.4"
                       product-version: "~4.6.x-dev"
-                      node: "20"
-                    - php: "8.0"
-                      product-version: "~4.6.x-dev"
-                      node: "20"
-                    - php: "8.3"
-                      product-version: "~5.0.x-dev"
                       node: "22"
+                      behat-config: "behat_ibexa_oss.yaml"
                     - php: "8.4"
                       product-version: "~5.0.x-dev"
                       node: "22"
+                      behat-config: "behat_ibexa_oss.yaml"
+                    - php: "8.4"
+                      product-version: "~6.0.x-dev"
+                      node: "22"
+                      behat-config: "behat_ibexa_oss.php"
 
         steps:
             - uses: actions/checkout@v7
@@ -52,7 +46,7 @@ jobs:
               run: bin/ci/test.sh
               continue-on-error: ${{ inputs.force != '' }}
               env:
-                TEST_CMD: "vendor/bin/behat -v --profile=browser --suite=admin-ui --tags=@richtext --config=behat_ibexa_oss.yaml"
+                TEST_CMD: "vendor/bin/behat -v --profile=browser --suite=admin-ui --tags=@richtext --config=${{ matrix.behat-config }}"
                 PRODUCT_VERSION: ${{ matrix.product-version }}
                 COMPOSER_AUTH: '{"github-oauth":{"github.com":"${{ steps.generate_token.outputs.token }}"}}'
             - name: Log in to the Container registry
