@@ -22,8 +22,11 @@ done
 APP_ENV="prod"
 
 BEHAT_REQUIREMENT="ibexa/behat:$PRODUCT_VERSION"
+EXTRA_REQUIREMENTS=""
 if [ "$PRODUCT_VERSION" = "~3.3.x-dev" ]; then
     BEHAT_REQUIREMENT="ezsystems/behatbundle:^8.3.x-dev"
+    # Twig 3.29.0 broke TemplateWrapper::unwrap() for symfony/twig-bundle 5.4, same as ibexa/core#838
+    EXTRA_REQUIREMENTS="twig/twig:!=3.29.0"
 fi
 
 if [ "$REUSE_VOLUME" = "0" ]; then
@@ -58,7 +61,7 @@ if [ "$REUSE_VOLUME" = "0" ]; then
         git init && git add . && git commit -m 'Init'
         composer recipes:install ibexa/oss --force --reset -v
         composer require ibexa/docker:$PRODUCT_VERSION --no-scripts $COMPOSER_OPTIONS &&
-        composer require $BEHAT_REQUIREMENT -W --no-scripts $COMPOSER_OPTIONS &&
+        composer require $BEHAT_REQUIREMENT $EXTRA_REQUIREMENTS -W --no-scripts $COMPOSER_OPTIONS &&
         sudo sed -i \"s/\['test' => true\]/\['test' => true, 'behat' => true\]/g\" config/bundles.php"
 fi
 
