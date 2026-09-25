@@ -42,6 +42,7 @@ The current Docker Compose files are made to be mixed and matched together for Q
 - `redis-session.yml` (optional, stores sessions in a separate Redis instance)
 - `varnish.yml` (optional, adds a Varnish service and appends config to app)
 - `solr.yml` (optional, add a Solr service and configure app for it)
+- `elastic.yml` (optional, adds an Elasticsearch 9 service and configures app for it; `elastic8.yml` does the same with Elasticsearch 8, which needs `composer require elasticsearch/elasticsearch:^8.19`. Run `php bin/console ibexa:elasticsearch:put-index-template` afterwards)
 - `db-postgresql.yml` (optional, switches the database engine to PostgreSQL - experimental)
 - `selenium.yml` (optional, always needs to be last, adds a Selenium service and appends config to app)
 - `chromium.yml` (alternative to `selenium.yml`, adds headless Chrome service, same applies here if used. Experimental)
