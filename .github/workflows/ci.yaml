@@ -25,15 +25,6 @@ jobs:
                 node:
                     - "22"
                 include:
-                    - php: "7.3"
-                      product-version: "~3.3.x-dev"
-                      node: "20"
-                    - php: "7.4"
-                      product-version: "~3.3.x-dev"
-                      node: "20"
-                    - php: "8.3"
-                      product-version: "~3.3.x-dev"
-                      node: "20"
                     - php: "7.4"
                       product-version: "~4.6.x-dev"
                       node: "20"
