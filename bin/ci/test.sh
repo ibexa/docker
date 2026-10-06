@@ -23,7 +23,8 @@ APP_ENV="prod"
 
 BEHAT_REQUIREMENT="ibexa/behat:$PRODUCT_VERSION"
 if [ "$PRODUCT_VERSION" = "~3.3.x-dev" ]; then
-    BEHAT_REQUIREMENT="ezsystems/behatbundle:^8.3.x-dev"
+    # dmore/chrome-mink-driver 2.11 connects to chromium:9222 on construction, the 3.3 setup only runs Selenium
+    BEHAT_REQUIREMENT="ezsystems/behatbundle:^8.3.x-dev 'dmore/chrome-mink-driver:<2.11'"
 fi
 
 if [ "$REUSE_VOLUME" = "0" ]; then
