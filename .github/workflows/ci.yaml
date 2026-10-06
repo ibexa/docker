@@ -46,6 +46,9 @@ jobs:
                     - php: "8.4"
                       product-version: "~5.0.x-dev"
                       node: "22"
+                    - php: "8.5"
+                      product-version: "~6.0.x-dev"
+                      node: "22"
 
         steps:
             - uses: actions/checkout@v7
