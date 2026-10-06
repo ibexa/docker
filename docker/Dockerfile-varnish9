@@ -6,8 +6,9 @@ SHELL ["/bin/bash", "-c"]
 USER root
 RUN set -e && \
     read -ra vmod_deps <<< "$VMOD_DEPS" && \
+    varnish_version=$(dpkg-query -W -f='${Version}' varnish) && \
     apt-get update && \
-    apt-get -y --no-install-recommends install "${vmod_deps[@]}" && \
+    apt-get -y --no-install-recommends install "${vmod_deps[@]/varnish-dev/varnish-dev=$varnish_version}" && \
     install-vmod https://github.com/varnish/varnish-modules/releases/download/0.28.0/varnish-modules-0.28.0.tar.gz && \
     rm -rf /var/lib/apt/lists/*
 
