@@ -49,6 +49,7 @@ jobs:
                     - php: "8.5"
                       product-version: "~6.0.x-dev"
                       node: "22"
+                      behat-config: "behat_ibexa_oss.php"
 
         steps:
             - uses: actions/checkout@v7
@@ -64,7 +65,7 @@ jobs:
               run: bin/ci/test.sh
               continue-on-error: ${{ inputs.force != '' }}
               env:
-                TEST_CMD: "vendor/bin/behat -v --profile=browser --suite=admin-ui --tags=@richtext --config=behat_ibexa_oss.yaml"
+                TEST_CMD: "vendor/bin/behat -v --profile=browser --suite=admin-ui --tags=@richtext --config=${{ matrix.behat-config || 'behat_ibexa_oss.yaml' }}"
                 PRODUCT_VERSION: ${{ matrix.product-version }}
                 COMPOSER_AUTH: '{"github-oauth":{"github.com":"${{ steps.generate_token.outputs.token }}"}}'
             - name: Log in to the Container registry
