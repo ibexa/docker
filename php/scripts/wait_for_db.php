@@ -64,7 +64,7 @@ for ($try = 1; $try <= MAXTRY; ++$try) {
     } catch (PDOException $e) {
         //echo $e->getCode() . ' ' . $e->errorInfo . ' ' . $e->getMessage() . "\n";
         if ($try < MAXTRY) {
-        sleep(5);
+            sleep(5);
         }
     }
 }
