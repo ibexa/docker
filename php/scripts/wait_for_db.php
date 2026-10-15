@@ -1,7 +1,13 @@
 #!/usr/bin/env php
 <?php
+
 /**
- * This script contains code for waiting for db to get up for up to 2min
+ * @copyright Copyright (C) Ibexa AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
+declare(strict_types=1);
+/**
+ * This script contains code for waiting for db to get up for up to 2min.
  *
  * Use:
  * - Main use case is with env variables as found below
@@ -32,23 +38,23 @@ $name = getenv('DATABASE_NAME') ?: 'ezp';
  */
 if ($driver === 'sqlite') {
     return true;
-} else if ($driver === 'sqlsrv') {
+} elseif ($driver === 'sqlsrv') {
     $dsn = "sqlsrv:Server=${host}" . ($port ? ",${port}" : '') . ";Database=${name};";
-} else if ($driver === 'oci8') {
+} elseif ($driver === 'oci8') {
     $dsn = "oci:dbname=//${host}" . ($port ? ":${port}" : '') . "/${name};";
-} else if ($driver === "pdo_pgsql") {
-    $dsn = "pgsql:host=${host};" . ($port ? "port=${port};" : ''). "dbname=${name};";
+} elseif ($driver === 'pdo_pgsql') {
+    $dsn = "pgsql:host=${host};" . ($port ? "port=${port};" : '') . "dbname=${name};";
 } else {
-    $dsn = "${driver}:host=${host};" . ($port ? "port=${port};" : ''). "dbname=${name};";
+    $dsn = "${driver}:host=${host};" . ($port ? "port=${port};" : '') . "dbname=${name};";
 }
 
 /**
- * User credentials
+ * User credentials.
  */
 $user = getenv('DATABASE_USER') ?: (!empty($argv[2]) ? $argv[2] : 'ezp');
 $password = getenv('DATABASE_PASSWORD') ?: (!empty($argv[3]) ? $argv[3] : 'pleasechangethis');
 
-for ($try = 1; $try <= MAXTRY; $try++) {
+for ($try = 1; $try <= MAXTRY; ++$try) {
     echo "Checking database is up, attempt: ${try}\n";
     try {
         $db = new PDO($dsn, $user, $password);
@@ -57,7 +63,9 @@ for ($try = 1; $try <= MAXTRY; $try++) {
         exit(0);
     } catch (PDOException $e) {
         //echo $e->getCode() . ' ' . $e->errorInfo . ' ' . $e->getMessage() . "\n";
-        if ($try < MAXTRY) sleep(5);
+        if ($try < MAXTRY) {
+        sleep(5);
+        }
     }
 }
 
