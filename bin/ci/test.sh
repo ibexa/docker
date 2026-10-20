@@ -60,7 +60,9 @@ if [ "$REUSE_VOLUME" = "0" ]; then
         composer recipes:install ibexa/oss --force --reset -v
         composer require ibexa/docker:$PRODUCT_VERSION --no-scripts $COMPOSER_OPTIONS &&
         composer require $BEHAT_REQUIREMENT -W --no-scripts $COMPOSER_OPTIONS &&
-        sudo sed -i \"s/\['test' => true\]/\['test' => true, 'behat' => true\]/g\" config/bundles.php"
+        sudo sed -i \"s/\['test' => true\]/\['test' => true, 'behat' => true\]/g\" config/bundles.php &&
+        # Symfony 8.1 framework-bundle recipe limits APP_ENV to Kernel::getAllowedEnvs(), the tests run in behat
+        sudo sed -i \"s/\(return \[.*'test'\)\];/\1, 'behat'];/\" src/Kernel.php"
 fi
 
 printf "\nMake sure Node.js and Yarn are included in latest-node\n"
