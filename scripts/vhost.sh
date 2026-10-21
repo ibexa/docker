@@ -132,7 +132,7 @@ function inject_environment_variables
 }
 
 inject_environment_variables
-if [ "${DATABASE_NAME}" != "" ]; then
+if [[ -n "${DATABASE_NAME}" ]]; then
     template_values[16]="${DATABASE_NAME}"
 fi
 
