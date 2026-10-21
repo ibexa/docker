@@ -1,6 +1,19 @@
 
+# Channel database mapping for parallel Behat testing
+map $server_port $fastcgi_database_name {
+    8081    "%DATABASE_NAME%_1";
+    8082    "%DATABASE_NAME%_2";
+    8083    "%DATABASE_NAME%_3";
+    8084    "%DATABASE_NAME%_4";
+    default "%DATABASE_NAME%";
+}
+
 server {
     listen       %PORT%;
+    listen       8081;
+    listen       8082;
+    listen       8083;
+    listen       8084;
     # Further documentation: http://nginx.org/en/docs/http/server_names.html
     server_name  %HOST_LIST%;
 
@@ -30,6 +43,9 @@ server {
     location / {
         location ~ ^/index\.php(/|$) {
             include ez_params.d/ez_fastcgi_params;
+
+            # Channel database routing
+            fastcgi_param DATABASE_NAME $fastcgi_database_name;
 
             # FPM socket
             # Possible values : unix:/var/run/php5-fpm.sock or 127.0.0.1:9000

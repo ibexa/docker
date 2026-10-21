@@ -27,6 +27,7 @@ template_vars=(${option_vars[*]})
 template_vars+=("%BODY_SIZE_LIMIT_M%")
 template_vars+=("%TIMEOUT_S%")
 template_vars+=("%HOST_LIST%")
+template_vars+=("%DATABASE_NAME%")
 
 # Default options
 declare -a template_values=(
@@ -46,6 +47,7 @@ declare -a template_values=(
     "48m"
     "90s"
     "localhost *.localhost"
+    "ezp"
 )
 
 function show_help
@@ -130,6 +132,9 @@ function inject_environment_variables
 }
 
 inject_environment_variables
+if [ "${DATABASE_NAME}" != "" ]; then
+    template_values[16]="${DATABASE_NAME}"
+fi
 
 ## Parse arguments
 for i in "$@"
@@ -164,6 +169,9 @@ case $i in
         ;;
     --binary-data-handler=*)
         template_values[12]="${i#*=}"
+        ;;
+    --database-name=*)
+        template_values[16]="${i#*=}"
         ;;
     --body-size-limit=*)
         let template_values[9]="${i#*=}"*1024*1024
