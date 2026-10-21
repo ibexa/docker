@@ -8,6 +8,15 @@ map $server_port $fastcgi_database_name {
     default "%DATABASE_NAME%";
 }
 
+# Channel database URL mapping for parallel Behat testing
+map $server_port $fastcgi_database_url {
+    8081    "%DATABASE_URL_1%";
+    8082    "%DATABASE_URL_2%";
+    8083    "%DATABASE_URL_3%";
+    8084    "%DATABASE_URL_4%";
+    default "%DATABASE_URL%";
+}
+
 # Channel cache namespace mapping for parallel Behat testing
 map $server_port $fastcgi_cache_namespace {
     8081    "channel_1";
@@ -55,6 +64,7 @@ server {
 
             # Channel database and cache routing
             fastcgi_param DATABASE_NAME $fastcgi_database_name;
+            #if[DATABASE_URL] fastcgi_param DATABASE_URL $fastcgi_database_url;
             fastcgi_param CACHE_NAMESPACE $fastcgi_cache_namespace;
 
             # FPM socket
