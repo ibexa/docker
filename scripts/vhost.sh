@@ -28,11 +28,6 @@ template_vars+=("%BODY_SIZE_LIMIT_M%")
 template_vars+=("%TIMEOUT_S%")
 template_vars+=("%HOST_LIST%")
 template_vars+=("%DATABASE_NAME%")
-template_vars+=("%DATABASE_URL%")
-template_vars+=("%DATABASE_URL_1%")
-template_vars+=("%DATABASE_URL_2%")
-template_vars+=("%DATABASE_URL_3%")
-template_vars+=("%DATABASE_URL_4%")
 
 # Default options
 declare -a template_values=(
@@ -53,11 +48,6 @@ declare -a template_values=(
     "90s"
     "localhost *.localhost"
     "ezp"
-    ""
-    ""
-    ""
-    ""
-    ""
 )
 
 function show_help
@@ -183,9 +173,6 @@ case $i in
     --database-name=*)
         template_values[16]="${i#*=}"
         ;;
-    --database-url=*)
-        DATABASE_URL="${i#*=}"
-        ;;
     --body-size-limit=*)
         let template_values[9]="${i#*=}"*1024*1024
         template_values[13]="${i#*=}m"
@@ -237,20 +224,6 @@ template_values[15]="${template_values[3]}"
 if [[ "${template_values[4]}" != "" ]] ; then
      tmp="${template_values[15]} ${template_values[4]}"
      template_values[15]=$tmp
-fi
-
-if [[ -z "${DATABASE_URL}" && -f "${template_values[0]}/.env" ]]; then
-    DATABASE_URL=$(grep -E '^DATABASE_URL=' "${template_values[0]}/.env" 2>/dev/null | head -n 1 | cut -d '=' -f2- | tr -d '"' | tr -d "'")
-fi
-
-if [[ -n "${DATABASE_URL}" ]]; then
-    base_db_name="${template_values[16]:-ezp}"
-    DATABASE_URL="${DATABASE_URL//\$\{DATABASE_NAME\}/${base_db_name}}"
-    template_values[17]="${DATABASE_URL}"
-    template_values[18]=$(echo "${DATABASE_URL}" | sed -E "s#/${base_db_name}([/?]|$)#/${base_db_name}_1\1#")
-    template_values[19]=$(echo "${DATABASE_URL}" | sed -E "s#/${base_db_name}([/?]|$)#/${base_db_name}_2\1#")
-    template_values[20]=$(echo "${DATABASE_URL}" | sed -E "s#/${base_db_name}([/?]|$)#/${base_db_name}_3\1#")
-    template_values[21]=$(echo "${DATABASE_URL}" | sed -E "s#/${base_db_name}([/?]|$)#/${base_db_name}_4\1#")
 fi
 
 
