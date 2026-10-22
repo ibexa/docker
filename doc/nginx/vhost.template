@@ -14,7 +14,7 @@ map $server_port $fastcgi_cache_namespace {
     8082    "channel_2";
     8083    "channel_3";
     8084    "channel_4";
-    default "";
+    default "%CACHE_NAMESPACE%";
 }
 
 server {
