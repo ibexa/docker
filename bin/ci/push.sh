@@ -22,7 +22,6 @@ docker images
 echo "About to tag remote image '${REMOTE_IMAGE}' with php version '${PHP_VERSION}' and Node '${NODE_VERSION}'"
 
 # "7.0"
-docker tag ibexa_php:latest "${REMOTE_IMAGE}:${PHP_VERSION}"
 docker tag ibexa_php:latest-node "${REMOTE_IMAGE}:${PHP_VERSION}-node${NODE_VERSION}"
 
 echo "Pushing docker image with all tags : ${REMOTE_IMAGE}"
