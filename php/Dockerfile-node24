@@ -1,0 +1,13 @@
+FROM ibexa_php:latest
+
+# Install Node.js and Yarn
+RUN apt-get update -q -y \
+    && apt-get install -q -y --no-install-recommends ca-certificates gnupg \
+    && mkdir -p /etc/apt/keyrings \
+    && curl --proto '=https' --tlsv1.2 -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_24.x nodistro main" > /etc/apt/sources.list.d/nodesource.list \
+    && curl --proto '=https' --tlsv1.2 -fsSL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list \
+    && apt-get update -q -y \
+    && apt-get install -q -y --no-install-recommends nodejs yarn \
+    && rm -rf /var/lib/apt/lists/*
