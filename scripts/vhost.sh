@@ -27,6 +27,8 @@ template_vars=(${option_vars[*]})
 template_vars+=("%BODY_SIZE_LIMIT_M%")
 template_vars+=("%TIMEOUT_S%")
 template_vars+=("%HOST_LIST%")
+template_vars+=("%DATABASE_NAME%")
+template_vars+=("%CACHE_NAMESPACE%")
 
 # Default options
 declare -a template_values=(
@@ -46,6 +48,8 @@ declare -a template_values=(
     "48m"
     "90s"
     "localhost *.localhost"
+    "ezp"
+    "ezp"
 )
 
 function show_help
@@ -130,6 +134,12 @@ function inject_environment_variables
 }
 
 inject_environment_variables
+if [[ -n "${DATABASE_NAME}" ]]; then
+    template_values[16]="${DATABASE_NAME}"
+fi
+if [[ -n "${CACHE_NAMESPACE}" ]]; then
+    template_values[17]="${CACHE_NAMESPACE}"
+fi
 
 ## Parse arguments
 for i in "$@"
@@ -164,6 +174,12 @@ case $i in
         ;;
     --binary-data-handler=*)
         template_values[12]="${i#*=}"
+        ;;
+    --database-name=*)
+        template_values[16]="${i#*=}"
+        ;;
+    --cache-namespace=*)
+        template_values[17]="${i#*=}"
         ;;
     --body-size-limit=*)
         let template_values[9]="${i#*=}"*1024*1024
@@ -218,6 +234,12 @@ if [[ "${template_values[4]}" != "" ]] ; then
      template_values[15]=$tmp
 fi
 
+if [[ -z "${CACHE_NAMESPACE}" && -f "${template_values[0]}/.env" ]]; then
+    env_cache_ns=$(grep -E '^CACHE_NAMESPACE=' "${template_values[0]}/.env" 2>/dev/null | head -n 1 | cut -d '=' -f2- | tr -d '"' | tr -d "'")
+    if [[ -n "${env_cache_ns}" ]]; then
+        template_values[17]="${env_cache_ns}"
+    fi
+fi
 
 ## Generate template result and output
 
