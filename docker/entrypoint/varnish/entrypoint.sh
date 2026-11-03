@@ -4,6 +4,7 @@
 # [--acl-all-networks] - Add all container's network in the PURGE ACL.
 # [--acl-add ...] - Add a host or network segment to the PURGE ACL
 # [--debug-acl-add ...] - Add a host or network segment to the debuggers ACL
+# [--trusted-proxy-add ...] - Add a host or network segment to the trusted_proxies ACL
 
 function create_template_file
 {
@@ -64,6 +65,15 @@ function add_segment_to_debugger_acl
     sed -i -s "s|\(.*DEBUGGER.*\)|    $segment\n\1|" /etc/varnish/parameters.vcl
 }
 
+# $1 is segment, format 1.2.3.4/24 or myhostname
+function add_segment_to_trusted_proxies_acl
+{
+    segment=`format_segment $1`
+
+    echo "Adding network segment to varnish trusted_proxies : $segment"
+    sed -i -s "s|\(.*TRUSTED_PROXY.*\)|    $segment\n\1|" /etc/varnish/parameters.vcl
+}
+
 create_template_file
 
 while (( "$#" )); do
@@ -90,6 +100,15 @@ while (( "$#" )); do
             echo "Warning : --debug-acl-add parameter needs to be followed by a network segment, for instance \"--debug-add 10.0.1.0/24\""
         else
             add_segment_to_debugger_acl $new_network
+        fi
+    elif [ "$1" = "--trusted-proxy-add" ]; then
+        shift
+        new_network="$1"
+
+        if [ "$new_network" = "" ]; then
+            echo "Warning : --trusted-proxy-add parameter needs to be followed by a network segment, for instance \"--trusted-proxy-add 10.0.1.0/24\""
+        else
+            add_segment_to_trusted_proxies_acl $new_network
         fi
     else
         echo "Warning : Unrecognized parameter $1"

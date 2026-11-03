@@ -1,0 +1,19 @@
+# Overlay declaring the app container a trusted proxy.
+#
+# Apply it after any of the varnish compose files - varnish.yml, varnish7.yml, varnish9.yml - as
+# they all define the same "varnish" service and share the same entrypoint:
+#   -f doc/docker/base-dev.yml -f doc/docker/varnish.yml -f doc/docker/varnish-trusted-proxy.yml
+#
+# By default the trusted_proxies ACL in parameters.vcl holds only localhost, so Varnish strips the
+# X-Forwarded-* and Forwarded headers of every incoming request. Adding the app container makes
+# Varnish pass those headers through instead, which is what a TLS terminator, load balancer or CDN
+# running in front of Varnish relies on.
+#
+# The invalidators and debuggers flags are repeated here on purpose: Compose replaces "command"
+# wholesale, so listing only the new flag would drop the ones varnish.yml sets. Do not rely on the
+# 172.16.0.0/12 entry in parameters.vcl covering the app container - that only holds while Docker
+# allocates networks from its default pool.
+
+services:
+  varnish:
+    command: ["--acl-add", "app", "--debug-acl-add", "app", "--trusted-proxy-add", "app"]
