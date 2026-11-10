@@ -24,10 +24,10 @@ jobs:
                       node: "22"
                     - php: "8.4"
                       product-version: "~5.0.x-dev"
-                      node: "22"
+                      node: "24"
                     - php: "8.5"
                       product-version: "~6.0.x-dev"
-                      node: "22"
+                      node: "24"
                       behat-config: "behat_ibexa_oss.php"
 
         steps:

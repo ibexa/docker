@@ -1,0 +1,28 @@
+FROM solr:10-slim
+
+# Switch to root user to perform setup tasks
+USER root
+
+# Copy the config generator and the Ibexa Solr schema/config files from the project
+COPY vendor/ibexa/solr/bin/generate-solr-config.sh /tmp/ibexa-solr/bin/generate-solr-config.sh
+COPY vendor/ibexa/solr/src/lib/Resources/config/solr/ /tmp/ibexa-solr/src/lib/Resources/config/solr/
+
+# Create the ezcloud directory and set correct ownership for Solr
+RUN mkdir -p /opt/solr/server/ezcloud \
+ && chown -R solr:solr /opt/solr/server/ezcloud /tmp/ibexa-solr
+
+# Switch back to the solr user, the generator refuses to run as root
+USER solr
+
+# Generate the ezcloud template (schema, language config and patched solrconfig.xml) the same way as for production,
+# from the default config of the Solr installed in this image
+RUN /tmp/ibexa-solr/bin/generate-solr-config.sh \
+    --destination-dir=/opt/solr/server/ezcloud/template/conf \
+    --solr-install-dir=/opt/solr \
+ && rm -rf /tmp/ibexa-solr
+
+# Set the Solr home directory environment variable
+ENV SOLR_HOME /var/solr/data
+
+# Start Solr and create a new collection using the custom template
+CMD ["solr-create", "-c", "collection1", "-d", "/opt/solr/server/ezcloud/template"]
