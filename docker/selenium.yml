@@ -10,12 +10,13 @@ services:
      - "5900:5900"
     environment:
      - SE_VNC_NO_PASSWORD=1
-     - SE_NODE_MAX_SESSIONS=2
+     - SE_NODE_MAX_SESSIONS=${SE_NODE_MAX_SESSIONS:-4}
      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+     - SE_NODE_SESSION_TIMEOUT=300
     networks:
      - backend
     # Because of: https://github.com/elgalu/docker-selenium/issues/20
-    shm_size: '2gb'
+    shm_size: '4gb'
 
   app:
     depends_on:
